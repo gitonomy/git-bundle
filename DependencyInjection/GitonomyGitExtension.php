@@ -20,7 +20,7 @@ use Symfony\Component\Config\FileLocator;
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class GitonomyTwigExtension extends Extension
+class GitonomyGitExtension extends Extension
 {
     /**
      * @inheritdoc
