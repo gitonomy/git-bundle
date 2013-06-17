@@ -57,7 +57,7 @@
         <tr data-hash="{{ commit.hash }}" data-parents="{{ commit.parentHashes|join(' ') }}">
             <td class="message">
                 {% for reference in commit.resolveReferences %}
-                    {{ git_render('reference_label', {reference: reference}) }}
+                    {{ git_label(reference) }}
                 {% endfor %}
                 <a href="{{ git_url(commit) }}">
                     {{ commit.shortMessage }}
