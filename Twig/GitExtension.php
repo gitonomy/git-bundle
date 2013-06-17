@@ -108,6 +108,29 @@ class GitExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('git_date', array($this, 'formatDate')),
+        );
+    }
+
+    public function formatDate(\DateTime $date, $format = 'long')
+    {
+        if ($format === 'long') {
+            $formatter = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT);
+        } elseif ($format === 'day') {
+            $formatter = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE);
+        } else {
+            throw new \InvalidArgumentException(sprintf('Format "%s" not supported. Supported are: long'));
+        }
+
+        return $formatter->format($date);
+    }
+
     public function renderCommit(\Twig_Environment $env, Commit $commit)
     {
         return $this->renderBlock($env, 'commit_header', array(
@@ -197,18 +220,24 @@ class GitExtension extends \Twig_Extension
 
     public function renderBlob($env, Blob $blob)
     {
+        $block = null;
+        $args  = array('blob' => $blob);
+
         if ($blob->isText()) {
             $block = 'blob_text';
         } else {
-            $mime = $blob->getMimetype();
-            if (preg_match("#^image/(png|jpe?g|gif)#", $mime)) {
+            $mimetype = $blob->getMimetype();
+            $args['mimetype'] = $mimetype;
+
+            if (preg_match("#^image/(png|jpe?g|gif)#", $mimetype)) {
+                $args['base64'] = base64_encode($blob->getContent());
                 $block = 'blob_image';
             } else {
                 $block = 'blob_binary';
             }
         }
 
-        return $this->renderBlock($env, $block, array('blob' => $blob));
+        return $this->renderBlock($env, $block, $args);
     }
 
     public function renderLabel(\Twig_Environment $env, Revision $revision)

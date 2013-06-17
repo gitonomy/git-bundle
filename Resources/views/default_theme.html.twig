@@ -22,7 +22,7 @@
     <thead>
         <tr>
             <th colspan="2">
-                <a class="load-previous">Load previous</a>
+                <a class="load-previous">{{ 'See more'|trans({}, 'git') }}</a>
             </th>
         </tr>
     </thead>
@@ -34,7 +34,7 @@
     <tfoot>
         <tr>
             <th colspan="2">
-                <a class="load-next">Load next</a>
+                <a class="load-next">{{ 'See more'|trans({}, 'git') }}</a>
             </th>
         </tr>
     </tfoot>
@@ -45,7 +45,7 @@
 {% spaceless %}
     {% set current_date = null %}
     {% for commit in log %}
-        {% set date = commit.authorDate.format('Y-m-d') %}
+        {% set date = commit.authorDate|git_date('day') %}
         {% if date != current_date %}
             <tr>
                 <th colspan="2">
@@ -103,7 +103,7 @@
 {% block status %}
 {% spaceless %}
     {% if diff_staged.files|length %}
-        <p>Staging area</p>
+        <p>{{ 'Staging area'|trans({}, "git") }}</p>
         <ul>
             {% for file in diff_staged.files %}
                 <li>{{ file.newName }}</li>
@@ -111,7 +111,7 @@
         </ul>
     {% endif %}
     {% if diff_pending.files|length %}
-        <p>Pending modifications</p>
+        <p>{{ 'Pending modifications'|trans({}, "git") }}</p>
         <ul>
             {% for file in diff_pending.files %}
                 <li>{{ file.name }}</li>
@@ -127,7 +127,7 @@
 {% spaceless %}
     <span class="git-author">
         {# Gravatar #}
-        <img alt="Avatar of {{ name }}" width="{{ size }}" height="{{ size }}" src="http://www.gravatar.com/avatar/{{ email_md5 }}?s={{ size }}" />
+        <img alt="{{ 'Gravatar of :user'|trans({':user': name}, 'git') }}" width="{{ size }}" height="{{ size }}" src="http://www.gravatar.com/avatar/{{ email_md5 }}?s={{ size }}" />
         {{- name -}}
     </span>
 {% endspaceless %}
@@ -187,7 +187,7 @@
         {% elseif file.newName == null %}
             <span class="file deleted">{{ file.oldName }} ({{ file.oldMode }})</span>
         {% elseif file.oldMode != file.newMode %}
-            <span class="changemod">{{ 'diff.label.file_mode_changed'|trans({'%old%': file.oldMode, '%new%': file.newMode}) }}</span>
+            <span class="changemod">{{ 'File mode changed from :old to :new'|trans({':old': file.oldMode, ':new': file.newMode}) }}</span>
         {% else %}
             <ul>
                 <li>{{ file.oldName }} ({{ file.oldMode }}) -&gt; {{ file.newName }} ({{ file.newMode }})</li>
@@ -321,10 +321,10 @@
 <thead>
     <tr>
         <th width="20"></td>
-        <th>{{ 'table.filename'|trans }}</th>
+        <th>{{ 'Filename'|trans({}, 'git') }}</th>
         {% if revision %}
-            <th>{{ 'table.date'|trans }}</th>
-            <th>{{ 'table.last_commit'|trans }}</th>
+            <th>{{ 'Modification date'|trans({}, 'git') }}</th>
+            <th>{{ 'Last commit'|trans({}, 'git') }}</th>
         {% endif %}
     </tr>
 </thead>
@@ -343,7 +343,7 @@
     {% if revision %}
         {% set last = revision.log(path ? path~'/'~name : name).commits[0] %}
         <td>
-            {{ last.getCommitterDate.format('Y-m-d H:i:s') }}
+            {{ last.getCommitterDate|git_date }}
         </td>
         <td>
             <a href="{{ git_url(last) }}">
@@ -376,12 +376,12 @@
 
 {% block blob_image %}
 {% spaceless %}
-    <pre><code>IMAGE</code></pre>
+    <img src="data:{{ mimetype }};base64,{{ base64 }}" />
 {% endspaceless %}
 {% endblock %}
 
 {% block blob_binary %}
 {% spaceless %}
-    <pre><code>BINARY</code></pre>
+    <p><em>This file is a binary.</em></p>
 {% endspaceless %}
 {% endblock %}
