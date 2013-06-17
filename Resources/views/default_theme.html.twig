@@ -225,42 +225,6 @@
 
 {# References #}
 
-{% block branches %}
-{% spaceless %}
-    <ul>
-        {% for branch in branches %}
-            <li>
-                <a href="{{ git_url(branch) }}">
-                    <strong>{{ branch.name }}</strong>
-                </a>
-                <small>
-                    {{ git_author(branch.commit) }}
-                    {{ branch.commit.authorDate.format('d/m/Y') }}
-                </small>
-            </li>
-        {% endfor %}
-    </ul>
-{% endspaceless %}
-{% endblock %}
-
-{% block tags %}
-{% spaceless %}
-    <ul>
-        {% for tag in tags %}
-            <li>
-                <a href="{{ git_url(tag) }}">
-                    <strong>{{ tag.name }}</strong>
-                </a>
-                <small>
-                    {{ git_author(tag.commit) }}
-                    {{ tag.commit.authorDate.format('d/m/Y') }}
-                </small>
-            </li>
-        {% endfor %}
-    </ul>
-{% endspaceless %}
-{% endblock %}
-
 {% block git_label_revision %}
 {% spaceless %}
     {% if revision is git_reference %}

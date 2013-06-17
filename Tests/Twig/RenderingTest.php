@@ -13,9 +13,38 @@ use Symfony\Component\Translation\Translator;
 class RenderingTest extends AbstractTest
 {
     private static $templates = array(
+        'diff'         => '{{ git_diff(diff) }}',
+        'log'          => '{{ git_log(log) }}',
         'label_tag'    => '{{ git_label(tag) }}',
         'label_branch' => '{{ git_label(branch) }}',
     );
+
+    public function testRenderingOk()
+    {
+        $repository = self::getFoobarRepository();
+
+        $commits = array(
+            self::LONGFILE_COMMIT,
+            self::BEFORE_LONGFILE_COMMIT,
+            self::LONGMESSAGE_COMMIT,
+            self::INITIAL_COMMIT,
+            self::MERGE_COMMIT,
+            self::ENCODING_COMMIT,
+        );
+
+        foreach ($commits as $hash) {
+            $commit = $repository->getCommit($hash);
+            $diff   = $commit->getDiff();
+            $log    = $repository->getLog($hash.'..'.self::INITIAL_COMMIT);
+
+            $crawler = self::render('diff', array('diff' => $diff));
+            $this->assertCount(1, $crawler->filter('div.file-wrapper'));
+
+            $crawler = self::render('log', array('log' => $log));
+            $this->assertCount(1, $crawler->filter('table'));
+
+        }
+    }
 
     public function testLabel_Tag()
     {
