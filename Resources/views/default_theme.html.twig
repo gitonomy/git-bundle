@@ -195,30 +195,41 @@
         {% endif %}
     </header>
     <div class="file-changes">
-        <table class="file-lines">
-            {% for change in file.changes %}
-                {% if not loop.first %}
-                    <tr><td class="skip" colspan="3">&nbsp;</td></tr>
-                {% endif %}
-                {% set old = change.rangeOldStart %}
-                {% set new = change.rangeNewStart %}
-                {%- for x, line in change.lines -%}
-                    <tr class="{{ line[0] == 1 ? 'new' : line[0] == -1 ? 'old' }}">
-                        <td class="line-number old">{{ line[0] != 1 ? old : ' ' }}</td>
-                        <td class="line-number new">{{ line[0] != -1 ? new : ' ' }}</td>
-                        <td class="{{ line[0] == 1 ? 'plus' : line[0] == -1 ? 'minus' }} source"><pre>{{ line[1] }}</pre></td>
-                    </tr>
-                    {%- if line[0] == 1 -%}
-                        {%- set new = new + 1 -%}
-                    {%- elseif line[0] == -1 -%}
-                        {%- set old = old + 1 -%}
-                    {%- else -%}
-                        {%- set new = new + 1 -%}
-                        {%- set old = old + 1 -%}
-                    {%- endif -%}
-                {%- endfor -%}
-            {% endfor %}
-        </table>
+        {% if file.isBinary %}
+            <div class="blob-compare">
+                <div class="old">
+                    {{ git_blob(file.oldBlob) }}
+                </div>
+                <div class="new">
+                    {{ git_blob(file.newBlob) }}
+                </div>
+            </div>
+        {% else %}
+            <table class="file-lines">
+                {% for change in file.changes %}
+                    {% if not loop.first %}
+                        <tr><td class="skip" colspan="3">&nbsp;</td></tr>
+                    {% endif %}
+                    {% set old = change.rangeOldStart %}
+                    {% set new = change.rangeNewStart %}
+                    {%- for x, line in change.lines -%}
+                        <tr class="{{ line[0] == 1 ? 'new' : line[0] == -1 ? 'old' }}">
+                            <td class="line-number old">{{ line[0] != 1 ? old : ' ' }}</td>
+                            <td class="line-number new">{{ line[0] != -1 ? new : ' ' }}</td>
+                            <td class="{{ line[0] == 1 ? 'plus' : line[0] == -1 ? 'minus' }} source"><pre>{{ line[1] }}</pre></td>
+                        </tr>
+                        {%- if line[0] == 1 -%}
+                            {%- set new = new + 1 -%}
+                        {%- elseif line[0] == -1 -%}
+                            {%- set old = old + 1 -%}
+                        {%- else -%}
+                            {%- set new = new + 1 -%}
+                            {%- set old = old + 1 -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                {% endfor %}
+            </table>
+        {% endif %}
     </div>
 {% endspaceless %}
 {% endblock %}
@@ -376,7 +387,7 @@
 
 {% block blob_image %}
 {% spaceless %}
-    <img src="data:{{ mimetype }};base64,{{ base64 }}" />
+    <img class="blob-image" src="data:{{ mimetype }};base64,{{ base64 }}" />
 {% endspaceless %}
 {% endblock %}
 

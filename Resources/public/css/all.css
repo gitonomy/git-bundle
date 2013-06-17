@@ -60,6 +60,30 @@
   background-color: #efefef;
 }
 
+
+.blob-compare {
+    display: block;
+    text-align: center;
+}
+
+.blob-compare .old, .blob-compare .new {
+  display: inline-block;
+  text-align: center;
+  padding: 1em 0;
+}
+
+.blob-compare .old {
+  padding-right: 1em;
+}
+
+.blob-compare .old .blob-image {
+  border: 1px solid red
+}
+
+.blob-compare .new .blob-image {
+  border: 1px solid green
+}
+
 /** Log **/
 
 span.git-author {
