@@ -76,8 +76,7 @@ If you are using Assetic:
 .. code-block:: html+jinja
 
     {% stylesheets
-        "bundles/gitonomytwig/css/diff.css"
-        "bundles/gitonomytwig/css/log.css"
+        "bundles/gitonomytwig/css/all.css"
     %}
         <link rel="stylesheet" href="{{ asset(asset_url) }}" />
     {% endstylesheets %}
@@ -90,8 +89,7 @@ If you are using Assetic:
 
 If not, you just need to make your application load those stylesheets:
 
-* @GitonomyGitBundle/Resources/public/css/diff.css
-* @GitonomyGitBundle/Resources/public/css/log.css
+* @GitonomyGitBundle/Resources/public/css/all.css
 
 And those javascripts:
 
