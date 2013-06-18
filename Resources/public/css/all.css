@@ -131,6 +131,43 @@ span.git-author {
     line-height: 1.8em;
 }
 
+/** Blame **/
+.blame {
+    width: 100%;
+}
+
+-$blameBorder:       #cfcfcf
+-$blameInfoBg:       #f8f8f8
+-$blameLineNumberBg: #efefef
+-$blameLineNumberFg: #444444
+
+.blame td.information {
+    width: 200px;
+    font-size: 12px;
+    background-color: #efefef;
+}
+
+.blame td.information span.author {
+    font-weight: bold;
+}
+
+.blame td.information, .blame .information-border {
+        border-top: 1px solid #cfcfcf;
+}
+
+.blame td.line-number {
+    width: 50px;
+    color: #444444;
+    background-color: #efefef;
+    padding: 0 0.3em 0 0.6em;
+
+.blame td.line-content pre {
+    border: 0
+    padding: 0
+    margin: 0
+    background: none
+}
+
 /** References **/
 
 .ref {
@@ -153,4 +190,3 @@ span.git-author {
     background-color: black;
     color: white;
 }
-
