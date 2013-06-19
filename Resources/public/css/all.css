@@ -160,6 +160,7 @@ span.git-author {
     color: #444444;
     background-color: #efefef;
     padding: 0 0.3em 0 0.6em;
+}
 
 .blame td.line-content pre {
     border: 0
@@ -189,4 +190,22 @@ span.git-author {
 .ref.tag {
     background-color: black;
     color: white;
+}
+
+/** Tree **/
+
+.pathcrumb {
+    list-style-type: none;
+    margin: 0;
+    font-size;: 1.5em;
+    line-heig;ht: 1.5em;
+    font-family: tellural;
+}
+
+.pathcrumb li {
+    display: inline-block;
+}
+
+.pathcrumb li.pull-right {
+    line-height: 2em;
 }
