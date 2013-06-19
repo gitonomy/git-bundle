@@ -249,14 +249,17 @@
         {% endif %}
         {% if revision is git_branch %}
             <span class="ref branch{{ revision.isRemote ? ' remote' }}">
+            {{ revision.name }}
         {% elseif revision is git_tag %}
             <span class="ref tag">
+            {{ revision.name }}
         {% elseif revision is git_stash %}
             <span class="ref stash">
+            {{ revision.name }}
         {% else %}
             <span class="ref">
+            {{ revision.revision }}
         {% endif %}
-        {{ revision.name }}
         </span>
         {% if url %}
             </a>
