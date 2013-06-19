@@ -197,12 +197,16 @@
     <div class="file-changes">
         {% if file.isBinary %}
             <div class="blob-compare">
-                <div class="old">
-                    {{ git_blob(file.oldBlob) }}
-                </div>
-                <div class="new">
-                    {{ git_blob(file.newBlob) }}
-                </div>
+                {% if file.modification or file.deletion %}
+                    <div class="old">
+                        {{ git_blob(file.oldBlob) }}
+                    </div>
+                {% endif %}
+                {% if file.modification or file.creation %}
+                    <div class="new">
+                        {{ git_blob(file.newBlob) }}
+                    </div>
+                {% endif %}
             </div>
         {% else %}
             <table class="file-lines">
