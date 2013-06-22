@@ -27,3 +27,16 @@ When it's done, add the extension to your Twig:
     $twig->addExtension($extension);
     $twig->addPath('/path/to/Gitonomy/Bundle/GitBundle/Resources/views', '@GitonomyGitBundle');
 
+Now, you just need to load those assets in your application:
+
+Assets installation
+:::::::::::::::::::
+
+You need to make your application load those stylesheets:
+
+* Resources/public/css/all.css
+
+And those javascripts:
+
+* Resources/public/css/log.js
+* Resources/public/css/commit.js

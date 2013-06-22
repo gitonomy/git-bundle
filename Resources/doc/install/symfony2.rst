@@ -83,14 +83,7 @@ If you are using Assetic:
 
     {% javascripts
         "bundles/gitonomytwig/js/log.js"
+        "bundles/gitonomytwig/js/commit.js"
     %}
         <script type="text/javascript" src="{{ asset(asset_url) }}"></script>
     {% endjavascripts %}
-
-If not, you just need to make your application load those stylesheets:
-
-* @GitonomyGitBundle/Resources/public/css/all.css
-
-And those javascripts:
-
-* @GitonomyGitBundle/Resources/public/css/log.js

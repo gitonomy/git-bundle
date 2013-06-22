@@ -1,5 +1,53 @@
 /** Diff **/
 
+ul.diff-summary {
+  list-style-type: none;
+}
+
+ul.diff-summary {
+  margin: 0;
+}
+
+ul.diff-summary input[type=checkbox] {
+  margin: 0;
+}
+
+ul.diff-summary a div.diff-file-label {
+  display: inline-block;
+  text-indent: 5px;
+  font-family: monospace;
+}
+
+ul.diff-summary a div.diff-file-label.creation:before {
+  content: "[+] ";
+  color: green;
+}
+
+ul.diff-summary a div.diff-file-label.creation {
+  color: green;
+}
+
+ul.diff-summary a div.diff-file-label.deletion:before {
+  content: "[-] ";
+  color: red;
+}
+
+ul.diff-summary a div.diff-file-label.deletion {
+  color: red;
+}
+
+ul.diff-summary a div.diff-file-label.modification:before {
+  content: "[ ] ";
+}
+
+ul.diff-summary a {
+  color: black;
+}
+
+ul.diff-summary a:hover > div {
+  text-decoration: underline;
+}
+
 .file-wrapper .file {
   margin-top: 10px;
 }

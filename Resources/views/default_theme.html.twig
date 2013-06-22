@@ -165,34 +165,46 @@
 {% endspaceless %}
 {% endblock %}
 
+{% block diff_file_label %}
+{% spaceless %}
+    {% set text = file.name %}
+    {% if file.creation %}
+        {% set class = " creation" %}
+    {% elseif file.deletion %}
+        {% set class = " deletion" %}
+    {% elseif file.rename %}
+        {% set class = " rename" %}
+        {% set text = file.oldName ~ ' > ' ~ file.newName %}
+    {% else %}
+        {% set class = " modification" %}
+    {% endif %}
+    {% if file.changeMode %}
+        {% set text = text ~ " (" ~ file.oldMode ~ " > " ~ file.newMode ~ ")" %}
+    {% endif %}
+    <div class="diff-file-label{{ class }}">{{ text }}</div>
+{% endspaceless %}
+{% endblock %}
+
 {% block diff_summary %}
-    <ul class="summary">
+{% spaceless %}
+    <ul class="diff-summary" id="{{ id_prefix }}-list">
+        <li><em><input type="checkbox" class="diff-toggle-all" data-target="{{ id_prefix }}-list" checked="checked" /> {{ 'Toggle all'|trans({}, 'git') }}</em></li>
         {% for i,file in diff.files %}
             <li>
+                <input type="checkbox" data-file-id="{{ id_prefix }}{{ i }}" checked="checked" />
                 <a href="#{{ id_prefix }}{{ i }}">
-                    {{ file.name }}
+                    {{ git_render('diff_file_label', {file: file}) }}
                 </a>
             </li>
         {% endfor %}
     </ul>
+{% endspaceless %}
 {% endblock %}
 
 {% block diff_file %}
 {% spaceless %}
     <header id="{{ id }}">
-        {% if file.oldName == file.newName and file.oldMode == file.newMode %}
-            <span class="file">{{ file.oldName }}</span>
-        {% elseif file.oldName == null %}
-            <span class="file">{{ file.newName }} ({{ file.newMode }})</span>
-        {% elseif file.newName == null %}
-            <span class="file deleted">{{ file.oldName }} ({{ file.oldMode }})</span>
-        {% elseif file.oldMode != file.newMode %}
-            <span class="changemod">{{ 'File mode changed from :old to :new'|trans({':old': file.oldMode, ':new': file.newMode}) }}</span>
-        {% else %}
-            <ul>
-                <li>{{ file.oldName }} ({{ file.oldMode }}) -&gt; {{ file.newName }} ({{ file.newMode }})</li>
-            </ul>
-        {% endif %}
+        {{ git_render('diff_file_label', {file: file}) }}
     </header>
     <div class="file-changes">
         {% if file.isBinary %}
