@@ -138,6 +138,11 @@ And your template:
 
     {{ git_tree(tree, revision, path) }}
 
+    {# or #}
+
+    {{ git_blob(blob) }}
+
+
 Another useful function when you're rendering a tree is what is called a "pathcrumb":
 a breadcrumb with all parent folders and links on them.
 

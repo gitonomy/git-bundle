@@ -247,7 +247,7 @@ span.git-author {
     margin: 0;
     font-size;: 1.5em;
     line-heig;ht: 1.5em;
-    font-family: tellural;
+    display: inline-block;
 }
 
 .pathcrumb li {

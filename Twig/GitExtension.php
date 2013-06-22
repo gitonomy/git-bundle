@@ -83,8 +83,6 @@ class GitExtension extends \Twig_Extension
             new \Twig_SimpleFunction('git_url',               array($this, 'getUrl')),
 
             new \Twig_SimpleFunction('git_status',            array($this, 'renderStatus'),           array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('git_branches',          array($this, 'renderBranches'),         array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('git_tags',              array($this, 'renderTags'),             array('is_safe' => array('html'), 'needs_environment' => true)),
 
             new \Twig_SimpleFunction('git_render',            array($this, 'renderBlock'),            array('is_safe' => array('html'), 'needs_environment' => true)),
         );
@@ -240,9 +238,18 @@ class GitExtension extends \Twig_Extension
         return $this->renderBlock($env, $block, $args);
     }
 
-    public function renderLabel(\Twig_Environment $env, Revision $revision)
+    public function renderLabel(\Twig_Environment $env, $revisions)
     {
-        return $this->renderBlock($env, 'git_label_revision', array('revision' => $revision));
+        if (!is_array($revisions)) {
+            $revisions = array($revisions);
+        }
+
+        $result = '';
+        foreach ($revisions as $revision) {
+            $result .= $this->renderBlock($env, 'git_label_revision', array('revision' => $revision));
+        }
+
+        return $result;
     }
 
     /**
