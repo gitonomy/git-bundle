@@ -1,14 +1,14 @@
 /**
  * Detects changes on single-file checkbox.
  */
-$(document).on('change', 'ul.diff-summary input[type=checkbox]', function (event) {
-    $t = $(event.currentTarget);
-    $target = $("#" + $t.attr('data-file-id'));
+$(document).on('change', 'ul.diff-summary input[type=checkbox][data-file-id]', function (event) {
+    var $t = $(event.currentTarget);
+    var $target = $("#" + $t.attr('data-file-id'));
 
-    if (undefined == $t.attr('checked')) {
-        $target.hide();
-    } else {
+    if ($t.prop('checked')) {
         $target.show();
+    } else {
+        $target.hide();
     }
 });
 
@@ -19,10 +19,6 @@ $(document).on('change', 'input[type=checkbox].diff-toggle-all', function (event
     var $t = $(event.currentTarget);
     var $target = $("#" + $t.attr('data-target') + " input[type=checkbox][data-file-id]");
 
-    if (undefined == $t.attr('checked')) {
-        $target.removeAttr('checked');
-    } else {
-        $target.attr('checked', 'checked');
-    }
+    $target.prop('checked', $t.prop('checked'));
     $target.trigger('change');
 });
