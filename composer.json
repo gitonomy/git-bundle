@@ -22,7 +22,7 @@
     "target-dir": "Gitonomy/Bundle/GitBundle",
 
     "require": {
-        "gitonomy/gitlib": "dev-master"
+        "gitonomy/gitlib": "~0.1"
     },
 
     "require-dev": {
@@ -31,7 +31,5 @@
         "symfony/translation": "2.3",
         "symfony/dom-crawler": "2.3",
         "symfony/css-selector": "2.3"
-    },
-
-    "minimum-stability": "dev"
+    }
 }
