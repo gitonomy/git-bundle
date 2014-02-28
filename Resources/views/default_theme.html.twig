@@ -393,12 +393,20 @@
 {% spaceless %}
     <div class="file-wrapper">
         <table class="file-lines">
+            {% set lines = '' %}
+            {% set code  = '' %}
             {%- for number, content in blob.content|split("\n") -%}
-                <tr>
-                    <td class="line-number">{{ number }}</td>
-                    <td class="source"><pre>{{ content }}</pre></td>
-                </tr>
+                {% set ln = number + 1 %}
+                {% set lines = lines ~ ('<a href="#L' ~ ln ~ '">' ~ ln ~ "</a>") %}
+                {% set code  = code  ~ content|e %}
+                {% set lines = lines ~ '<br />' %}
+                {% set code  = code  ~ '<br />' %}
             {%- endfor -%}
+
+            <tr>
+                <td class="line-number">{{ lines|raw }}</td>
+                <td class="source"><pre>{{ code|raw }}</pre></td>
+            </tr>
         </table>
     </div>
 {% endspaceless %}
