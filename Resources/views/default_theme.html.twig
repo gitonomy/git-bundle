@@ -397,7 +397,7 @@
             {% set code  = '' %}
             {%- for number, content in blob.content|split("\n") -%}
                 {% set ln = number + 1 %}
-                {% set lines = lines ~ ('<a href="#L' ~ ln ~ '">' ~ ln ~ "</a>") %}
+                {% set lines = lines ~ ('<a id="L' ~ ln ~ '" href="#L' ~ ln ~ '">' ~ ln ~ "</a>") %}
                 {% set code  = code  ~ content|e %}
                 {% set lines = lines ~ '<br />' %}
                 {% set code  = code  ~ '<br />' %}
