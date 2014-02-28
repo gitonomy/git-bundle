@@ -140,6 +140,10 @@ span.git-author {
     padding: 1px 5px;
 }
 
+span.git-author img {
+  margin-right: 5px;
+}
+
 .git-log-wrapper {
     position: relative;
     overflow: hidden;
